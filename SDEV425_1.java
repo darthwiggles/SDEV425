@@ -26,20 +26,25 @@ public class SDEV425_1 {
         String fileLine;
         try {
             inputStream = new BufferedReader(new FileReader(filename));
+            //inputStream = new BufferedReader(new FileReader("EmailAddresses.txt"));
             
-            if (!filename.contains("[A-Za-z0-9_]+" || ".txt")) {
+    /*        if (!filename.contains("[A-Za-z0-9_]+" || ".txt")) {
             // if (!Pattern.matches("[A-Za-z0-9_]+", filename)) {
                 inputStream.close();
             }
-
+    */
             System.out.println("Email Addresses:");
             // Read one Line using BufferedReader
             while ((fileLine = inputStream.readLine()) != null) {
-                if (!fileLine.contains("[A-Za-z0-9_]+")) {
+                
+                //normalization
+                //fileLine = Normalizer.normalize(fileLine, Form.NFKC);
+                
+    //          if (!fileLine.contains("[A-Za-z0-9_]+")) {
                     System.out.println(fileLine);
-                } else {
-                    System.out.println("Invalid address.")
-                }    
+    //          } else {
+    //              System.out.println("Invalid address.")
+    //          }    
             }
         } catch (IOException io) {
             System.out.println("File IO exception" + io.getMessage());
