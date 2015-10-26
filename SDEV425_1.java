@@ -31,6 +31,7 @@ public class SDEV425_1 {
     /*        if (!filename.contains("[A-Za-z0-9_]+" || ".txt")) {
             // if (!Pattern.matches("[A-Za-z0-9_]+", filename)) {
                 inputStream.close();
+                Runtime.getRuntime().exit(1);
             }
     */
             System.out.println("Email Addresses:");
@@ -57,10 +58,8 @@ public class SDEV425_1 {
                 }
             } catch (IOException io) {
                 System.out.println("Issue closing the Files" + io.getMessage());
-            } finally {
-                Runtime.getRuntime().exit(1);
-            }
-
+            } 
+        Runtime.getRuntime().exit(1);
         }
         
     }
