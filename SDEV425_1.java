@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.File;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  *
