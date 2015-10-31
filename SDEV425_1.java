@@ -24,6 +24,7 @@ public class SDEV425_1 {
     public static void main(String[] args) {
         // Read the filename from the command line argument          
         File filename = new File(args[0]);
+        
         BufferedReader inputStream = null;
         String fileLine;
         
