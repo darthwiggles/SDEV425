@@ -22,16 +22,16 @@ public class SDEV425_1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Read the filename from the command line argument          
-        File filename = new File(args[0]);
         
         BufferedReader inputStream = null;
         String fileLine;
         
+        // Read the filename from the command line argument          
+        File filename = new File(args[0]);
+        
         try {
             
             String canonicalPath = filename.getCanonicalPath();
-            
             inputStream = new BufferedReader(new FileReader(canonicalPath));
 
             System.out.println("Email Addresses:");
