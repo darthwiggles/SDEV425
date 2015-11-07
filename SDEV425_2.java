@@ -67,22 +67,26 @@ public class SDEV425_2 extends Application {
         PasswordField pwBox = new PasswordField();
         // Add Password field to grid 1,2
         grid.add(pwBox, 1, 2);
+        
+        //Create 2nd Passwordfield
+        PasswordField pwBox2 = new PasswordField("Keyfob code");
+        grid.add(pwBox2, 1, 3);
 
         // Create Login Button
         Button btn = new Button("Login");
-        // Add button to grid 1,4
-        grid.add(btn, 1, 4);
+        // Add button to grid 1,5
+        grid.add(btn, 1, 5);
         
         //Create Guest Login Button
         Button btn2 = new Button("Guest Login");
-        grid.add(btn2, 1, 5);
+        grid.add(btn2, 1, 6);
         
          // Create some text to place in the scene
         Text scenetitle2 = new Text("WARNING: This is a secure system. Usage may be monitored," +
                 " recorded,\n and subject to audit. Unauthorized use of the information system" +
                 " is \nprohibited and subject to criminal and civil penalties. Use of the" +
                 " information \nsystem indicates consent to monitoring and recording.");
-        grid.add(scenetitle2, 0, 7, 2, 1);
+        grid.add(scenetitle2, 0, 8, 2, 1);
         scenetitle2.setFill(Color.FIREBRICK);
 
         final Text actiontarget = new Text();
@@ -96,7 +100,7 @@ public class SDEV425_2 extends Application {
                 
                 if (failedAttempts < 4) {
                     // Authenticate the user
-                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText());
+                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText(), pwBox2.getText());
                     // If valid clear the grid and Welcome the user
                     if (isValid) {
                         grid.setVisible(false);
@@ -181,10 +185,12 @@ public class SDEV425_2 extends Application {
      * @param pword the password entered
      * @return isValid true for authenticated
      */
-    public boolean authenticate(String user, String pword) {
+    public boolean authenticate(String user, String pword, String code) {
         boolean isValid = false;
+        code = "Placeholder";
         if (user.equalsIgnoreCase("sdevadmin")
-                && pword.equals("425!pass")) {
+                && pword.equals("425!pass") 
+                && code.equals("Placeholder")){
             isValid = true;
         }
 
