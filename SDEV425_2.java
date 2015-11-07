@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -89,31 +93,45 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                // Authenticate the user
-                boolean isValid = authenticate(userTextField.getText(), pwBox.getText());
-                // If valid clear the grid and Welcome the user
-                if (isValid) {
-                    grid.setVisible(false);
-                    GridPane grid2 = new GridPane();
-                    // Align to Center
-                    // Note Position is geometric object for alignment
-                    grid2.setAlignment(Pos.CENTER);
-                     // Set gap between the components
-                    // Larger numbers mean bigger spaces
-                    grid2.setHgap(10);
-                    grid2.setVgap(10);
-                    Text scenetitle = new Text("Welcome " + userTextField.getText() + "!");
-                    // Add text to grid 0,0 span 2 columns, 1 row
-                    grid2.add(scenetitle, 0, 0, 2, 1);
-                    Scene scene = new Scene(grid2, 500, 400);
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
-                   // If Invalid Ask user to try again
-                } else {                    
+                
+                if (failedAttempts < 4) {
+                    // Authenticate the user
+                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText());
+                    // If valid clear the grid and Welcome the user
+                    if (isValid) {
+                        grid.setVisible(false);
+                        GridPane grid2 = new GridPane();
+                        // Align to Center
+                        // Note Position is geometric object for alignment
+                        grid2.setAlignment(Pos.CENTER);
+                        // Set gap between the components
+                        // Larger numbers mean bigger spaces
+                        grid2.setHgap(10);
+                        grid2.setVgap(10);
+                        Text scenetitle = new Text("Welcome " + userTextField.getText() + "!");
+                        // Add text to grid 0,0 span 2 columns, 1 row
+                        grid2.add(scenetitle, 0, 0, 2, 1);
+                        Scene scene = new Scene(grid2, 500, 400);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                        // If Invalid Ask user to try again
+                    } else {                    
+                        final Text actiontarget = new Text();
+                        grid.add(actiontarget, 1, 6);
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Please try again.");
+                    
+                        java.sql.Date timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+                        //String?
+                        logAttempt(timestamp);
+                        failedAttempts++;
+                    }
+                }
+                else {
                     final Text actiontarget = new Text();
                     grid.add(actiontarget, 1, 6);
                     actiontarget.setFill(Color.FIREBRICK);
-                    actiontarget.setText("Please try again.");
+                    actiontarget.setText("You have exceeded the number of allowable login attempts.");
                 }
 
             }
@@ -153,6 +171,8 @@ public class SDEV425_2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        public int failedAttempts = 0;
         launch(args);
     }
 
@@ -170,5 +190,36 @@ public class SDEV425_2 extends Application {
 
         return isValid;
     }
-
+    
+    public static void logAttempt(String timestamp) {
+    
+        // declaring variables of log and initializing the buffered writer
+        String log = "Failed login time: " + timestamp;
+        BufferedWriter writer = null;
+        
+        //write the log variable using the bufferedWriter to log.txt
+        try {
+            writer = new BufferedWriter(new FileWriter("log.txt"));
+            writer.write(log);
+        }
+        //print error message if there is one
+        catch (IOException io) {
+            System.out.println("File IO Exception" + io.getMessage());
+        }
+        //close the file
+        finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            }
+            //print error message if there is one
+            catch (IOException io) {
+                System.out.println("Issue closing the file." + io.getMessage());
+            }
+        }
+        
+    }
+        
+    //}
 }
