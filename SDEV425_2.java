@@ -187,7 +187,19 @@ public class SDEV425_2 extends Application {
      */
     public boolean authenticate(String user, String pword, String code) {
         boolean isValid = false;
+        
+        for (int i = 0; i < pword.length(); ++i) {
+            char ch = pword.charAt(i);
+            if (!code.isEmpty()) {
+                code += " ";
+            }
+            int n = (int)ch - (int)'a' + 1;
+            code += String.valueOf(n);
+        }
+        System.out.println(code);
+        
         code = "Placeholder";
+        
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
                 && code.equals("Placeholder")){
