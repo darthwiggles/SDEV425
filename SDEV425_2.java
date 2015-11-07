@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdev425_2;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -41,7 +40,7 @@ public class SDEV425_2 extends Application {
         grid.setVgap(10);
 
         // Create some text to place in the scene
-        Text scenetitle = new Text("Welcome. Login to continue.");
+        Text scenetitle = new Text("Welcome. Log in to continue.");
         // Add text to grid 0,0 span 2 columns, 1 row
         grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -69,6 +68,18 @@ public class SDEV425_2 extends Application {
         Button btn = new Button("Login");
         // Add button to grid 1,4
         grid.add(btn, 1, 4);
+        
+        //Create Guest Login Button
+        Button btn2 = new Button("Guest Login");
+        grid.add(btn2, 1, 5);
+        
+         // Create some text to place in the scene
+        Text scenetitle2 = new Text("WARNING: This is a secure system. Usage may be monitored," +
+                " recorded,\n and subject to audit. Unauthorized use of the information system" +
+                " is \nprohibited and subject to criminal and civil penalties. Use of the" +
+                " information \nsystem indicates consent to monitoring and recording.");
+        grid.add(scenetitle2, 0, 7, 2, 1);
+        scenetitle2.setFill(Color.FIREBRICK);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
@@ -107,6 +118,31 @@ public class SDEV425_2 extends Application {
 
             }
         });
+        
+        // Set the Action when button 2 is clicked
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                    //Welcome the guest user
+                    grid.setVisible(false);
+                    GridPane grid2 = new GridPane();
+                    // Align to Center
+                    // Note Position is geometric object for alignment
+                    grid2.setAlignment(Pos.CENTER);
+                     // Set gap between the components
+                    // Larger numbers mean bigger spaces
+                    grid2.setHgap(10);
+                    grid2.setVgap(10);
+                    Text scenetitle = new Text("Welcome Guest! Limited access granted.");
+                    // Add text to grid 0,0 span 2 columns, 1 row
+                    grid2.add(scenetitle, 0, 0, 2, 1);
+                    Scene scene = new Scene(grid2, 500, 400);
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+            }
+        });
+        
         // Set the size of Scene
         Scene scene = new Scene(grid, 500, 400);
         primaryStage.setScene(scene);
