@@ -69,9 +69,11 @@ public class SDEV425_2 extends Application {
         // Add Password field to grid 1,2
         grid.add(pwBox, 1, 2);
         
-        //Create 2nd Passwordfield
+        //Create 2nd Passwordfield and label
         PasswordField pwBox2 = new PasswordField();
         grid.add(pwBox2, 1, 3);
+        Label pw2 = new Label("Keyfob code: ");
+        grid.add(pw2, 0, 3);
 
         // Create Login Button
         Button btn = new Button("Login");
@@ -98,7 +100,7 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                int failedAttempts = 0;
+                //int failedAttempts = 0;
                 
                 if (failedAttempts < 4) {
                     // Authenticate the user
@@ -129,7 +131,8 @@ public class SDEV425_2 extends Application {
                     
                         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                         logAttempt(timestamp);
-                        failedAttempts++;
+                        //int failedAttempts++;
+                        System.out.println(failedAttempts);
                     }
                 }
                 else {
@@ -176,7 +179,6 @@ public class SDEV425_2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
         launch(args);
     }
 
