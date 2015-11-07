@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -69,7 +70,7 @@ public class SDEV425_2 extends Application {
         grid.add(pwBox, 1, 2);
         
         //Create 2nd Passwordfield
-        PasswordField pwBox2 = new PasswordField("Keyfob code");
+        PasswordField pwBox2 = new PasswordField();
         grid.add(pwBox2, 1, 3);
 
         // Create Login Button
@@ -97,6 +98,7 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
+                int failedAttempts = 0;
                 
                 if (failedAttempts < 4) {
                     // Authenticate the user
@@ -121,12 +123,11 @@ public class SDEV425_2 extends Application {
                         // If Invalid Ask user to try again
                     } else {                    
                         final Text actiontarget = new Text();
-                        grid.add(actiontarget, 1, 6);
+                        grid.add(actiontarget, 1, 7);
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please try again.");
                     
-                        java.sql.Date timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-                        //String?
+                        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                         logAttempt(timestamp);
                         failedAttempts++;
                     }
@@ -175,8 +176,7 @@ public class SDEV425_2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        public int failedAttempts = 0;
+       
         launch(args);
     }
 
@@ -239,5 +239,4 @@ public class SDEV425_2 extends Application {
         
     }
         
-    //}
 }
