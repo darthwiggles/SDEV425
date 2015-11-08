@@ -7,8 +7,8 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -134,8 +134,7 @@ public class SDEV425_2 extends Application {
                         //int failedAttempts++;
                         System.out.println(failedAttempts);
                     }
-                }
-                else {
+                } else {
                     final Text actiontarget = new Text();
                     grid.add(actiontarget, 1, 6);
                     actiontarget.setFill(Color.FIREBRICK);
@@ -185,6 +184,7 @@ public class SDEV425_2 extends Application {
     /**
      * @param user the username entered
      * @param pword the password entered
+     * @param code the keyfob code entered
      * @return isValid true for authenticated
      */
     public boolean authenticate(String user, String pword, String code) {
@@ -199,6 +199,8 @@ public class SDEV425_2 extends Application {
             code += String.valueOf(n);
         }
         System.out.println(code);
+        int codeInt = parseInt(String code);
+        System.out.println(codeInt);
         
         code = "Placeholder";
         
