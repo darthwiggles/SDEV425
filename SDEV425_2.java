@@ -29,7 +29,7 @@ import javafx.stage.Stage;
  * https://docs.oracle.com/javafx/2/get_started/form.htm
  */
 public class SDEV425_2 extends Application {
-    
+    int failedAttempts;
 
     @Override
     public void start(Stage primaryStage) {
@@ -100,9 +100,8 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                //int failedAttempts = 0;
                 
-                if (failedAttempts < 4) {
+                if (failedAttempts < 3) {
                     // Authenticate the user
                     boolean isValid = authenticate(userTextField.getText(), pwBox.getText(), pwBox2.getText());
                     // If valid clear the grid and Welcome the user
@@ -131,10 +130,10 @@ public class SDEV425_2 extends Application {
                     
                         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                         logAttempt(timestamp);
-                        //int failedAttempts++;
-                        System.out.println(failedAttempts);
+                        failedAttempts++;
                     }
-                } else {
+                }
+                else {
                     final Text actiontarget = new Text();
                     grid.add(actiontarget, 1, 6);
                     actiontarget.setFill(Color.FIREBRICK);
@@ -190,7 +189,7 @@ public class SDEV425_2 extends Application {
     public boolean authenticate(String user, String pword, String code) {
         boolean isValid = false;
         
-        for (int i = 0; i < pword.length(); ++i) {
+        for (int i = 0; i < pword.length() - 5; ++i) {
             char ch = pword.charAt(i);
             if (!code.isEmpty()) {
                 code += " ";
@@ -199,8 +198,8 @@ public class SDEV425_2 extends Application {
             code += String.valueOf(n);
         }
         System.out.println(code);
-        int codeInt = parseInt(String code);
-        System.out.println(codeInt);
+        //long codeInt = Long.parseLong(code);
+        //System.out.println(codeInt);
         
         code = "Placeholder";
         
