@@ -134,10 +134,21 @@ public class SDEV425_2 extends Application {
                     }
                 }
                 else {
-                    final Text actiontarget = new Text();
-                    grid.add(actiontarget, 1, 6);
-                    actiontarget.setFill(Color.FIREBRICK);
-                    actiontarget.setText("You have exceeded the number of allowable login attempts.");
+                    grid.setVisible(false);
+                    GridPane grid3 = new GridPane();
+                    // Align to Center
+                    // Note Position is geometric object for alignment
+                    grid3.setAlignment(Pos.CENTER);
+                     // Set gap between the components
+                    // Larger numbers mean bigger spaces
+                    grid3.setHgap(10);
+                    grid3.setVgap(10);
+                    Text scenetitle = new Text("You have exceeded the number of allowable login attempts.");
+                    // Add text to grid 0,0 span 2 columns, 1 row
+                    grid3.add(scenetitle, 0, 0, 2, 1);
+                    Scene scene = new Scene(grid3, 500, 400);
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
                 }
 
             }
@@ -189,7 +200,7 @@ public class SDEV425_2 extends Application {
     public boolean authenticate(String user, String pword, String code) {
         boolean isValid = false;
         
-        for (int i = 0; i < pword.length() - 5; ++i) {
+        for (int i = 0; i < pword.length(); ++i) {
             char ch = pword.charAt(i);
             if (!code.isEmpty()) {
                 code += " ";
