@@ -127,13 +127,11 @@ public class SDEV425_2 extends Application {
                         grid.add(actiontarget, 1, 7);
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please try again.");
-                    
                         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                         logAttempt(timestamp);
                         failedAttempts++;
                     }
-                }
-                else {
+                } else {
                     grid.setVisible(false);
                     GridPane grid3 = new GridPane();
                     // Align to Center
@@ -209,8 +207,13 @@ public class SDEV425_2 extends Application {
             code += String.valueOf(n);
         }
         System.out.println(code);
-        //long codeInt = Long.parseLong(code);
-        //System.out.println(codeInt);
+        
+        //Regular expression to remove spaces
+        code.replaceAll("\\s+","");
+        System.out.println(code);
+        
+        double codeDouble = Double.parseDouble(code);
+        System.out.println(codeDouble);
         
         code = "Placeholder";
         
