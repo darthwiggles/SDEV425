@@ -198,6 +198,7 @@ public class SDEV425_2 extends Application {
     public boolean authenticate(String user, String pword, String code) {
         boolean isValid = false;
         
+        //Turn the password into a code used to check validity
         for (int i = 0; i < pword.length(); ++i) {
             char ch = pword.charAt(i);
             if (!code.isEmpty()) {
@@ -206,20 +207,17 @@ public class SDEV425_2 extends Application {
             int n = (int)ch - (int)'a' + 1;
             code += String.valueOf(n);
         }
-        System.out.println(code);
-        
-        //Regular expression to remove spaces
-        code.replaceAll("\\s+","");
-        System.out.println(code);
-        
-        double codeDouble = Double.parseDouble(code);
-        System.out.println(codeDouble);
-        
-        code = "Placeholder";
+        //Remove spaces and negative signs
+        code = code.replaceAll("\\s+","");
+        code = code.replaceAll("-","");
+        //Change the string to a long integer
+        long codeInt = Long.parseLong(code);
+        codeInt = codeInt / 5000000;
+        System.out.println(codeInt);
         
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
-                && code.equals("Placeholder")){
+                && codeInt == 88928726){
             isValid = true;
         }
 
