@@ -103,7 +103,8 @@ public class SDEV425_2 extends Application {
                 
                 if (failedAttempts < 3) {
                     // Authenticate the user
-                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText(), pwBox2.getText());
+                    long codeInt = Long.parseLong(pwBox2.getText());
+                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText(), codeInt);
                     // If valid clear the grid and Welcome the user
                     if (isValid) {
                         grid.setVisible(false);
@@ -192,18 +193,16 @@ public class SDEV425_2 extends Application {
     /**
      * @param user the username entered
      * @param pword the password entered
-     * @param code the keyfob code entered
+     * @param usercode the keyfob code entered
      * @return isValid true for authenticated
      */
-    public boolean authenticate(String user, String pword, String code) {
+    public boolean authenticate(String user, String pword, long usercode) {
         boolean isValid = false;
+        String code = "";
         
         //Turn the password into a code used to check validity
         for (int i = 0; i < pword.length(); ++i) {
             char ch = pword.charAt(i);
-            if (!code.isEmpty()) {
-                code += " ";
-            }
             int n = (int)ch - (int)'a' + 1;
             code += String.valueOf(n);
         }
@@ -213,14 +212,13 @@ public class SDEV425_2 extends Application {
         //Change the string to a long integer
         long codeInt = Long.parseLong(code);
         codeInt = codeInt / 5000000;
-        System.out.println(codeInt);
+        //Correct code is 88928726
         
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
-                && codeInt == 88928726){
+                && codeInt == usercode){
             isValid = true;
         }
-
         return isValid;
     }
     
