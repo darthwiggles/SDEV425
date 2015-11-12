@@ -211,8 +211,15 @@ public class SDEV425_2 extends Application {
         code = code.replaceAll("-","");
         //Change the string to a long integer
         long codeInt = Long.parseLong(code);
+        
+        //The algorithm that creates the code
+        //Divides it down to a manageable size, and incorporates the date
         codeInt = codeInt / 5000000;
-        //Correct code is 88928726
+        String day = new SimpleDateFormat("dd").format(new Date());
+        int dayInt = Integer.parseInt(day);
+        codeInt += dayInt;
+        //Correct code is 88928726 + the current day of the month
+        //On the 1st is is 88928727, the 12th is 88928738, etc.
         
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
