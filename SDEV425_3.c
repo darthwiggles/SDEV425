@@ -5,7 +5,7 @@
 void fillPassword(size_t , char[]);
 void showResults(char);
 // should have void listed
-void showMenu();
+void showMenu(void);
 
 // Define a variable to hold a password
 // and the copy
@@ -64,7 +64,8 @@ void showResults(char value) {
 	switch (value){
 	case 'F':
 	case 'f':
-		printf("Welcome to the Football season!\n");		
+		printf("Welcome to the Football season!\n");
+		break;
 	case 'S':		
 	case 's':
 		printf("Welcome to the Soccer season!\n");
