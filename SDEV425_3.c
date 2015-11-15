@@ -11,6 +11,8 @@ void showMenu(void);
 // and the copy
 char password[15];
 char cpassword[15];
+//char password[15] = "";
+//char cpassword[15] = "";
 
 int main(void)
 { 
@@ -52,7 +54,7 @@ int main(void)
 // Make a String of '1's
 void fillPassword(size_t n, char dest[]) {
 	// Should be n-1
-	 for (size_t j = 0; j < n; j++) {	
+	 for (size_t j = 0; j < n-1; j++) {	
 		dest[j] = '1';
 	}
 	// Add null terminator for string
