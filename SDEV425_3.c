@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <string.h>
 
 // Function prototypes
@@ -9,10 +9,8 @@ void showMenu(void);
 
 // Define a variable to hold a password
 // and the copy
-char password[15];
-char cpassword[15];
-//char password[15] = "";
-//char cpassword[15] = "";
+char password[15] = "";
+char cpassword[15] = "";
 
 int main(void)
 { 
@@ -25,7 +23,7 @@ int main(void)
 
 	// Display menu and Get Selection
 	while (cont != 'E' && cont != 'e') {
-		// Diaply the Menu
+		// Display the Menu
 		showMenu();
 		
 		// Get the user selection
