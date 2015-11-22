@@ -33,10 +33,12 @@ int main(void)
 		showResults(cont);
 	}
 	// Call the Copy routine	
-	fillPassword(sizeof(password),password);	
+	fillPassword(sizeof(password),password);
+	//cpassword = fillPassword(sizeof(password),password);
 	
 	// Display variable values
 	printf("password is %s\n", password);
+	//printf("password is %s\n", cpassword);
 	printf("cVar is %d\n", cVar);
 
 	// Copy password 	
@@ -44,6 +46,7 @@ int main(void)
 	
 	// Pause before exiting
 	char confirm;
+	//char confirm[0] = "";
 	printf("Confirm your exit!");
 	confirm = getchar();		
 	return 0;
@@ -57,6 +60,7 @@ void fillPassword(size_t n, char dest[]) {
 	}
 	// Add null terminator for string
 	dest[n] = '\0';
+	//printf(dest);
 }
 
 /* Display the Results*/
