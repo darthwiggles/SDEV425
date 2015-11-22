@@ -48,7 +48,8 @@ int main(void)
 	char confirm;
 	//char confirm[0] = "";
 	printf("Confirm your exit!");
-	confirm = getchar();		
+	confirm = getchar();
+	//getchar();
 	return 0;
 }
 
