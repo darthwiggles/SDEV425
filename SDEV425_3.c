@@ -20,6 +20,7 @@ int main(void)
 	// Variables
 	char cont = 'y'; // To continue with loop
 	int cVar = 0; // process variable
+        char confirm = 'y';
 
 	// Display menu and Get Selection
 	while (cont != 'E' && cont != 'e') {
@@ -28,28 +29,25 @@ int main(void)
 		
 		// Get the user selection
 		cont = getchar();
+                //Eliminate the "new line" char used in error by next getchar())
+                getchar();
 		
 		// Display the menu response
 		showResults(cont);
 	}
 	// Call the Copy routine	
 	fillPassword(sizeof(password),password);
-	//cpassword = fillPassword(sizeof(password),password);
 	
 	// Display variable values
 	printf("password is %s\n", password);
-	//printf("password is %s\n", cpassword);
 	printf("cVar is %d\n", cVar);
 
 	// Copy password 	
 	memcpy(cpassword, password,sizeof(password));	
 	
 	// Pause before exiting
-	char confirm;
-	//char confirm[0] = "";
-	printf("Confirm your exit!");
-	confirm = getchar();
-	//getchar();
+	printf("Press enter to confirm your exit!");
+        confirm = getchar();
 	return 0;
 }
 
@@ -61,7 +59,6 @@ void fillPassword(size_t n, char dest[]) {
 	}
 	// Add null terminator for string
 	dest[n] = '\0';
-	//printf(dest);
 }
 
 /* Display the Results*/
@@ -85,6 +82,7 @@ void showResults(char value) {
 		break;
 	default:
 		printf("Please enter a valid selection\n");
+                break;
 	}
 	
 }
