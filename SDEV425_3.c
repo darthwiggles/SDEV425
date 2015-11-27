@@ -29,7 +29,7 @@ int main(void)
 		
 		// Get the user selection
 		cont = getchar();
-                //Eliminate the "new line" char used in error by next getchar())
+                //Eliminate the "new line" char used in error by next getchar()
                 getchar();
 		
 		// Display the menu response
@@ -63,6 +63,8 @@ void fillPassword(size_t n, char dest[]) {
 
 /* Display the Results*/
 void showResults(char value) {
+	printf("cont/value is %s\n", value);
+	printf("--------------\n");
 	switch (value){
 	case 'F':
 	case 'f':
