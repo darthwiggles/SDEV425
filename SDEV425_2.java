@@ -104,7 +104,8 @@ public class SDEV425_2 extends Application {
                 if (failedAttempts < 3) {
                     // Authenticate the user
                     long codeInt = Long.parseLong(pwBox2.getText());
-                    boolean isValid = authenticate(userTextField.getText(), pwBox.getText(), codeInt);
+                    String username = userTextField.getText();
+                    boolean isValid = authenticate(username, pwBox.getText(), codeInt);
                     // If valid clear the grid and Welcome the user
                     if (isValid) {
                         grid.setVisible(false);
@@ -129,7 +130,7 @@ public class SDEV425_2 extends Application {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please try again.");
                         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-                        logAttempt(timestamp);
+                        logAttempt(timestamp, username);
                         failedAttempts++;
                     }
                 } else {
@@ -229,10 +230,10 @@ public class SDEV425_2 extends Application {
         return isValid;
     }
     
-    public static void logAttempt(String timestamp) {
+    public static void logAttempt(String timestamp, String username) {
     
         // declaring variables of log and initializing the buffered writer
-        String log = "Failed login time: " + timestamp;
+        String log = "Username: " + username + ", Failed login time: " + timestamp;
         BufferedWriter writer = null;
         
         //write the log variable using the bufferedWriter to log.txt
