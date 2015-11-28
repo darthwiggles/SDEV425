@@ -136,8 +136,7 @@ public class SDEV425_2 extends Application {
                         grid.add(actiontarget, 1, 7);
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please try again.");
-                        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-                        logAttempt(timestamp, username);
+                        logAttempt(username);
                         failedAttempts++;
                     }
                 } else {
@@ -237,11 +236,15 @@ public class SDEV425_2 extends Application {
         return isValid;
     }
     
-    public static void logAttempt(String timestamp, String username) {
-    
+    public static void logAttempt(String username) {
+        
+        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        int currentMins = timestampMinutes();
+        
         // declaring variables of log and initializing the buffered writer
         List<String> log = new ArrayList<String>();
-        String logItem = "Username: " + username + ", Failed login time: " + timestamp + "\n";
+        String logItem = "Username: " + username + ", Failed login time: " + timestamp + " -" +
+                        currentMins + "\n";
         log.add(logItem);
         BufferedWriter writer = null;
         
@@ -273,20 +276,8 @@ public class SDEV425_2 extends Application {
         
         boolean recentAttempt = true;
         int attempts = 0;
-        
-        //Express the current time in minutes
-        //There is almost certainly a simpler way to handle this
-        String currentYear = new SimpleDateFormat("yyyy").format(new Date());
-        String currentMonth = new SimpleDateFormat("MM").format(new Date());
-        String currentDay = new SimpleDateFormat("dd").format(new Date());
-        String currentMin = new SimpleDateFormat("mm").format.(new Date());
-        int currentYearInt = Integer.parseInt(currentYear);
-        int currentMonthInt = Integer.parseInt(currentMonth);
-        int currentDayInt = Integer.parseInt(currentDay);
-        int currentMinInt = Integer.parseInt(currentMin);
-        int currentTime = (currentYearInt * 525600) + (currentMonthInt * 43800) +
-                          (currentDayInt * 1440) + currentMinInt;
-        System.out.println(currentTime);
+        int currentMins = timestampMinutes();
+        System.out.println(currentMins);
         
         BufferedReader inputStream = null;
         String fileLine;
@@ -301,15 +292,12 @@ public class SDEV425_2 extends Application {
                 //Check for recent login attempts by the same user
                 if (fileLine.contains(username)) {
                     System.out.println("Previous attempt found\n");
-                    
-                    String loggedDate = fileline.substring(fileline.lastIndexOf("n time:") + 1);
-                    System.out.println(loggedDate);
-                    
-                    /*
-                    if (!Pattern.matches("[0-9A-Za-z@.]+", fileLine)) {
+                    String attemptMins = fileLine.substring(fileLine.lastIndexOf('-') + 1);
+                    System.out.println(attemptMins);
+                    int attemptMinsInt = Integer.parseInt(attemptMins);
+                    if ((currentMins - attemptMinsInt) < 30) {
                         attempts++;
-                    } 
-                    */
+                    }
                 }    
             } 
             
@@ -331,5 +319,21 @@ public class SDEV425_2 extends Application {
             recentAttempt = false;
         } 
         return recentAttempt;
-    }    
+    } 
+    
+    public static int timestampMinutes() {
+        //Express the current time in minutes
+        //String year = new SimpleDateFormat("yyyy").format(new Date());
+        String year = new SimpleDateFormat("yy").format(new Date());
+        String month = new SimpleDateFormat("MM").format(new Date());
+        String day = new SimpleDateFormat("dd").format(new Date());
+        String min = new SimpleDateFormat("mm").format.(new Date());
+        int yearInt = Integer.parseInt(year);
+        int monthInt = Integer.parseInt(month);
+        int dayInt = Integer.parseInt(day);
+        int minInt = Integer.parseInt(min);
+        int totalMin = (currentYearInt * 525600) + (currentMonthInt * 43800) +
+                        (currentDayInt * 1440) + currentMinInt;
+        return totalMin;    
+    }
 }
