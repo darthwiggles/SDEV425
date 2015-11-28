@@ -7,6 +7,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.application.Application;
@@ -100,11 +101,15 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                
+                //If no recent login attempts, reset lockout counter
+                String username = userTextField.getText();
+                boolean recentAttempt = checkLog(username);
+                if (recentAttempt == false) {
+                    failedAttempts = 0;
+                }
                 if (failedAttempts < 3) {
                     // Authenticate the user
                     long codeInt = Long.parseLong(pwBox2.getText());
-                    String username = userTextField.getText();
                     boolean isValid = authenticate(username, pwBox.getText(), codeInt);
                     // If valid clear the grid and Welcome the user
                     if (isValid) {
@@ -261,5 +266,59 @@ public class SDEV425_2 extends Application {
         }
         
     }
+     
+    public static boolean checkLog(String username) {
         
+        boolean recentAttempt = true;
+        int attempts = 0;
+        
+        //Express the current time in minutes
+        //There is almost certainly a simpler way to handle this
+        String currentYear = new SimpleDateFormat("yyyy").format(new Date());
+        String currentMonth = new SimpleDateFormat("MM").format(new Date());
+        String currentDay = new SimpleDateFormat("dd").format(new Date());
+        String currentMin = new SimpleDateFormat("mm").format.(new Date());
+        int currentYearInt = Integer.parseInt(currentYear);
+        int currentMonthInt = Integer.parseInt(currentMonth);
+        int currentDayInt = Integer.parseInt(currentDay);
+        int currentMinInt = Integer.parseInt(currentMin);
+        int currentTime = (currentYearInt * 525600) + (currentMonthInt * 43800) +
+                          (currentDayInt * 1440) + currentMinInt;
+        System.out.println(currentTime);
+        
+        BufferedReader inputStream = null;
+        String fileLine;
+        File filename = new File("log.txt");
+        
+        try {
+            inputStream = new BufferedReader(new FileReader(filename));
+
+            // Read one Line using BufferedReader
+            while ((fileLine = inputStream.readLine()) != null) {
+              
+              //Check for recent login attempts        
+              if (!Pattern.matches("[0-9A-Za-z@.]+", normFileLine)) {
+                    attempts++;
+              } 
+            } 
+            
+        } catch (IOException io) {
+            System.out.println("File IO exception" + io.getMessage());
+        } finally {
+            // Need another catch for closing 
+            // the streams          
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException io) {
+                System.out.println("Issue closing the Files" + io.getMessage());
+            } 
+        Runtime.getRuntime().exit(1);
+        }
+        if (attempts == 0) {
+            recentAttempt = false;
+        } 
+        return recentAttempt;
+    }    
 }
