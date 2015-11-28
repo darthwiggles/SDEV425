@@ -277,7 +277,7 @@ public class SDEV425_2 extends Application {
         boolean recentAttempt = true;
         int attempts = 0;
         int currentMins = timestampMinutes();
-        System.out.println(currentMins);
+        System.out.println(currentMins) + "\n";
         
         BufferedReader inputStream = null;
         String fileLine;
@@ -293,7 +293,7 @@ public class SDEV425_2 extends Application {
                 if (fileLine.contains(username)) {
                     System.out.println("Previous attempt found\n");
                     String attemptMins = fileLine.substring(fileLine.lastIndexOf('-') + 1);
-                    System.out.println(attemptMins);
+                    System.out.println(attemptMins) + "\n";
                     int attemptMinsInt = Integer.parseInt(attemptMins);
                     if ((currentMins - attemptMinsInt) < 30) {
                         attempts++;
