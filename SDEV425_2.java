@@ -35,7 +35,6 @@ import javafx.stage.Stage;
 public class SDEV425_2 extends Application {
     int failedAttempts;
     int code = codeGen();
-    System.out.println("For testing purposes, the code is " + code + "\n");
 
     @Override
     public void start(Stage primaryStage) {
@@ -320,8 +319,41 @@ public class SDEV425_2 extends Application {
     }
     
     public static int codeGen() {
-        //Generate a random code
+        //Generate a random code and email it
         int code = ThreadLocalRandom.current().nextInt(10000000, 99999999);
+        
+        Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
+
+		Session session = Session.getDefaultInstance(props,
+			new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("username","password");
+				}
+			});
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("from@email.com"));
+                        message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse("jeffdkeys@gmail.com"));
+			message.setSubject("Authentication Code");
+			message.setText(code);
+
+			Transport.send(message);
+
+			System.out.println("Code is " + code + "\n");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+        
         return code;
     }
 }
