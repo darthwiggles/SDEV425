@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.lang.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -296,10 +298,19 @@ public class SDEV425_2 extends Application {
             // Read one Line using BufferedReader
             while ((fileLine = inputStream.readLine()) != null) {
               
-              //Check for recent login attempts        
-              if (!Pattern.matches("[0-9A-Za-z@.]+", normFileLine)) {
-                    attempts++;
-              } 
+                //Check for recent login attempts by the same user
+                if (fileLine.contains(username)) {
+                    System.out.println("Previous attempt found\n");
+                    
+                    String loggedDate = fileline.substring(fileline.lastIndexOf("n time:") + 1);
+                    System.out.println(loggedDate);
+                    
+                    /*
+                    if (!Pattern.matches("[0-9A-Za-z@.]+", fileLine)) {
+                        attempts++;
+                    } 
+                    */
+                }    
             } 
             
         } catch (IOException io) {
