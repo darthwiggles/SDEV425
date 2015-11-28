@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.*;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +34,8 @@ import javafx.stage.Stage;
  */
 public class SDEV425_2 extends Application {
     int failedAttempts;
+    int code = codeGen();
+    System.out.println("For testing purposes, the code is " + code + "\n");
 
     @Override
     public void start(Stage primaryStage) {
@@ -111,8 +114,8 @@ public class SDEV425_2 extends Application {
                 }
                 if (failedAttempts < 3) {
                     // Authenticate the user
-                    long codeInt = Long.parseLong(pwBox2.getText());
-                    boolean isValid = authenticate(username, pwBox.getText(), codeInt);
+                    int usercode = Integer.parseInt(pwBox2.getText());
+                    boolean isValid = authenticate(username, pwBox.getText(), usercode, code);
                     // If valid clear the grid and Welcome the user
                     if (isValid) {
                         grid.setVisible(false);
@@ -201,36 +204,15 @@ public class SDEV425_2 extends Application {
      * @param user the username entered
      * @param pword the password entered
      * @param usercode the keyfob code entered
+     * @param code is the correct code
      * @return isValid true for authenticated
      */
-    public boolean authenticate(String user, String pword, long usercode) {
+    public boolean authenticate(String user, String pword, int usercode, int code) {
         boolean isValid = false;
-        String code = "";
-        
-        //Turn the password into a code used to check validity
-        for (int i = 0; i < pword.length(); ++i) {
-            char ch = pword.charAt(i);
-            int n = (int)ch - (int)'a' + 1;
-            code += String.valueOf(n);
-        }
-        //Remove spaces and negative signs
-        code = code.replaceAll("\\s+","");
-        code = code.replaceAll("-","");
-        //Change the string to a long integer
-        long codeInt = Long.parseLong(code);
-        
-        //The algorithm that creates the code
-        //Divides it down to a manageable size, and incorporates the date
-        codeInt = codeInt / 5000000;
-        String day = new SimpleDateFormat("dd").format(new Date());
-        int dayInt = Integer.parseInt(day);
-        codeInt += dayInt;
-        //Correct code is 88928726 + the current day of the month
-        //On the 1st is is 88928727, the 12th is 88928738, etc.
         
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
-                && codeInt == usercode){
+                && codeInt == code){
             isValid = true;
         }
         return isValid;
@@ -335,5 +317,11 @@ public class SDEV425_2 extends Application {
         int totalMin = (currentYearInt * 525600) + (currentMonthInt * 43800) +
                         (currentDayInt * 1440) + currentMinInt;
         return totalMin;    
+    }
+    
+    public static int codeGen() {
+        //Generate a random code
+        int code = ThreadLocalRandom.current().nextInt(10000000, 99999999);
+        return code;
     }
 }
