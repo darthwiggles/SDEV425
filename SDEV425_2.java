@@ -233,7 +233,9 @@ public class SDEV425_2 extends Application {
     public static void logAttempt(String timestamp, String username) {
     
         // declaring variables of log and initializing the buffered writer
-        String log = "Username: " + username + ", Failed login time: " + timestamp;
+        List<String> log = new ArrayList<String>();
+        String logItem = "Username: " + username + ", Failed login time: " + timestamp + "\n";
+        log.add(logItem);
         BufferedWriter writer = null;
         
         //write the log variable using the bufferedWriter to log.txt
