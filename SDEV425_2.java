@@ -5,22 +5,23 @@
  */
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.*;
 import java.lang.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Date;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeMessage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -219,7 +220,7 @@ public class SDEV425_2 extends Application {
         
         if (user.equalsIgnoreCase("sdevadmin")
                 && pword.equals("425!pass") 
-                && codeInt == code){
+                && usercode == code){
             isValid = true;
         }
         return isValid;
@@ -231,10 +232,12 @@ public class SDEV425_2 extends Application {
         int currentMins = timestampMinutes();
         
         // declaring variables of log and initializing the buffered writer
-        List<String> log = new ArrayList<String>();
-        String logItem = "Username: " + username + ", Failed login time: " + timestamp + " -" +
+        //List<String> log = new ArrayList<String>();
+        String log = "Username: " + username + ", Failed login time: " + timestamp + " -" +
                         currentMins + "\n";
-        log.add(logItem);
+        //String logItem = "Username: " + username + ", Failed login time: " + timestamp + " -" +
+                        //currentMins + "\n";
+        //log.add(logItem);
         BufferedWriter writer = null;
         
         //write the log variable using the bufferedWriter to log.txt
@@ -266,14 +269,14 @@ public class SDEV425_2 extends Application {
         boolean recentAttempt = true;
         int attempts = 0;
         int currentMins = timestampMinutes();
-        System.out.println(currentMins) + "\n";
+        System.out.println(currentMins + "\n");
         
         BufferedReader inputStream = null;
         String fileLine;
         File filename = new File("log.txt");
         
         try {
-            inputStream = new BufferedReader(new FileReader(filename));
+            inputStream = new BufferedReader(new FileReader("log.txt"));
 
             // Read one Line using BufferedReader
             while ((fileLine = inputStream.readLine()) != null) {
@@ -282,7 +285,7 @@ public class SDEV425_2 extends Application {
                 if (fileLine.contains(username)) {
                     System.out.println("Previous attempt found\n");
                     String attemptMins = fileLine.substring(fileLine.lastIndexOf('-') + 1);
-                    System.out.println(attemptMins) + "\n";
+                    System.out.println(attemptMins + "\n");
                     int attemptMinsInt = Integer.parseInt(attemptMins);
                     if ((currentMins - attemptMinsInt) < 30) {
                         attempts++;
@@ -316,19 +319,22 @@ public class SDEV425_2 extends Application {
         String year = new SimpleDateFormat("yy").format(new Date());
         String month = new SimpleDateFormat("MM").format(new Date());
         String day = new SimpleDateFormat("dd").format(new Date());
-        String min = new SimpleDateFormat("mm").format.(new Date());
+        String min = new SimpleDateFormat("mm").format(new Date());
         int yearInt = Integer.parseInt(year);
         int monthInt = Integer.parseInt(month);
         int dayInt = Integer.parseInt(day);
         int minInt = Integer.parseInt(min);
-        int totalMin = (currentYearInt * 525600) + (currentMonthInt * 43800) +
-                        (currentDayInt * 1440) + currentMinInt;
+        int totalMin = (yearInt * 525600) + (monthInt * 43800) +
+                        (dayInt * 1440) + minInt;
         return totalMin;    
     }
     
     public static int codeGen() {
         //Generate a random code and email it
         int code = ThreadLocalRandom.current().nextInt(10000000, 99999999);
+        
+        /*
+        Email is non-functional
         
         Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -356,12 +362,12 @@ public class SDEV425_2 extends Application {
 
 			Transport.send(message);
 
-			System.out.println("Code is " + code + "\n");
-
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
+            */
         
+        System.out.println("Code is " + code + "\n");
         return code;
     }
 }
