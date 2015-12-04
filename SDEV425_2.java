@@ -325,16 +325,7 @@ public class SDEV425_2 extends Application {
         int codeInt = ThreadLocalRandom.current().nextInt(10000000, 99999999);
         String code = Integer.toString(codeInt);
         
-        
-        //Email does not function. "Could not convert socket to TLS."
-        
         Properties props = new Properties();
-		//props.put("mail.smtp.host", "smtp.gmail.com");
-		//props.put("mail.smtp.socketFactory.port", "465");
-		//props.put("mail.smtp.socketFactory.class",
-		//		"javax.net.ssl.SSLSocketFactory");
-		//props.put("mail.smtp.auth", "true");
-		//props.put("mail.smtp.port", "465");
                 props.put("mail.smtp.auth", "true");
                 props.put("mail.smtp.starttls.enable", "true");
                 props.put("mail.smtp.host", "smtp.gmail.com");
@@ -361,8 +352,7 @@ public class SDEV425_2 extends Application {
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
-		}
-            
+		}    
         
         //System.out.println("Code is " + code + "\n");
         return codeInt;
