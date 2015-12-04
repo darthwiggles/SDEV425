@@ -9,10 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
-import java.lang.*;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Date;
 //import javax.mail.Message;
@@ -43,6 +40,7 @@ import javafx.stage.Stage;
  */
 public class SDEV425_2 extends Application {
     int failedAttempts;
+    //Determine the code to be used for additional authentication
     int code = codeGen();
 
     @Override
@@ -100,7 +98,7 @@ public class SDEV425_2 extends Application {
         
          // Create some text to place in the scene
         Text scenetitle2 = new Text("WARNING: This is a secure system. Usage may be monitored," +
-                " recorded,\n and subject to audit. Unauthorized use of the information system" +
+                " recorded,\nand subject to audit. Unauthorized use of the information system" +
                 " is \nprohibited and subject to criminal and civil penalties. Use of the" +
                 " information \nsystem indicates consent to monitoring and recording.");
         grid.add(scenetitle2, 0, 8, 2, 1);
@@ -114,7 +112,7 @@ public class SDEV425_2 extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                //If no recent login attempts, reset lockout counter
+                //If no recent login attempts, reset lockout counter to 0
                 String username = userTextField.getText();
                 boolean recentAttempt = checkLog(username);
                 if (recentAttempt == false) {
@@ -143,14 +141,17 @@ public class SDEV425_2 extends Application {
                         primaryStage.show();
                         // If Invalid Ask user to try again
                     } else {                    
+                        //If credentials are invalid:
                         final Text actiontarget = new Text();
                         grid.add(actiontarget, 1, 7);
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please try again.");
+                        //Add to the log and increment attempt counter by 1
                         logAttempt(username);
                         failedAttempts++;
                     }
                 } else {
+                    //If lockout counter has reached 3
                     grid.setVisible(false);
                     GridPane grid3 = new GridPane();
                     // Align to Center
@@ -232,12 +233,8 @@ public class SDEV425_2 extends Application {
         int currentMins = timestampMinutes();
         
         // declaring variables of log and initializing the buffered writer
-        //List<String> log = new ArrayList<String>();
         String log = "Username: " + username + ", Failed login time: " + timestamp + " -" +
                         currentMins + "\n";
-        //String logItem = "Username: " + username + ", Failed login time: " + timestamp + " -" +
-                        //currentMins + "\n";
-        //log.add(logItem);
         BufferedWriter writer = null;
         
         //write the log variable using the bufferedWriter to log.txt
@@ -269,28 +266,27 @@ public class SDEV425_2 extends Application {
         boolean recentAttempt = true;
         int attempts = 0;
         int currentMins = timestampMinutes();
-        System.out.println(currentMins + "\n");
         
         BufferedReader inputStream = null;
         String fileLine;
-        File filename = new File("log.txt");
+        String filename = "log.txt";
         
         try {
-            inputStream = new BufferedReader(new FileReader("log.txt"));
+            inputStream = new BufferedReader(new FileReader(filename));
 
             // Read one Line using BufferedReader
             while ((fileLine = inputStream.readLine()) != null) {
               
                 //Check for recent login attempts by the same user
                 if (fileLine.contains(username)) {
-                    System.out.println("Previous attempt found\n");
+                    //check the portion of the log that contains the timestamps in minutes
                     String attemptMins = fileLine.substring(fileLine.lastIndexOf('-') + 1);
-                    System.out.println(attemptMins + "\n");
                     int attemptMinsInt = Integer.parseInt(attemptMins);
-                    if ((currentMins - attemptMinsInt) < 30) {
+                    //lockout counter reset time set to 2mins for testing purposes
+                    if ((currentMins - attemptMinsInt) < 2) {
                         attempts++;
                     }
-                }    
+                }
             } 
             
         } catch (IOException io) {
@@ -305,7 +301,6 @@ public class SDEV425_2 extends Application {
             } catch (IOException io) {
                 System.out.println("Issue closing the Files" + io.getMessage());
             } 
-        Runtime.getRuntime().exit(1);
         }
         if (attempts == 0) {
             recentAttempt = false;
