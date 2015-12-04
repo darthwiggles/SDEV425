@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Date;
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.PasswordAuthentication;
-//import javax.mail.Session;
-//import javax.mail.Transport;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -321,10 +322,11 @@ public class SDEV425_2 extends Application {
     
     public static int codeGen() {
         //Generate a random code and email it
-        int code = ThreadLocalRandom.current().nextInt(10000000, 99999999);
+        int codeInt = ThreadLocalRandom.current().nextInt(10000000, 99999999);
+        String code = Integer.toString(codeInt);
         
         /*
-        Email is non-functional
+        Email does not function. "Could not convert socket to TLS."
         
         Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -334,17 +336,18 @@ public class SDEV425_2 extends Application {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "465");
 
+
 		Session session = Session.getDefaultInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("username","password");
+					return new PasswordAuthentication("jeffdkeystest001","testpwd001");
 				}
 			});
 
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("from@email.com"));
+			message.setFrom(new InternetAddress("jeffdkeystest001@gmail.com"));
                         message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse("jeffdkeys@gmail.com"));
 			message.setSubject("Authentication Code");
@@ -358,6 +361,6 @@ public class SDEV425_2 extends Application {
             */
         
         System.out.println("Code is " + code + "\n");
-        return code;
+        return codeInt;
     }
 }
