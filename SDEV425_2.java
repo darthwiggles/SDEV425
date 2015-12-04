@@ -310,17 +310,12 @@ public class SDEV425_2 extends Application {
     
     public static int timestampMinutes() {
         //Express the current time in minutes
-        //String year = new SimpleDateFormat("yyyy").format(new Date());
         String year = new SimpleDateFormat("yy").format(new Date());
         String month = new SimpleDateFormat("MM").format(new Date());
         String day = new SimpleDateFormat("dd").format(new Date());
         String min = new SimpleDateFormat("mm").format(new Date());
-        int yearInt = Integer.parseInt(year);
-        int monthInt = Integer.parseInt(month);
-        int dayInt = Integer.parseInt(day);
-        int minInt = Integer.parseInt(min);
-        int totalMin = (yearInt * 525600) + (monthInt * 43800) +
-                        (dayInt * 1440) + minInt;
+        int totalMin = (Integer.parseInt(year)*525600)+(Integer.parseInt(month)*43800)+
+                (Integer.parseInt(day)*1440)+Integer.parseInt(min);
         return totalMin;    
     }
     
