@@ -1,60 +1,63 @@
 #include <stdio.h>
 #include <string.h>
 
+enum { BUFFERSIZE = 15 };
+
 // Function prototypes
-void fillPassword(size_t , char[]);
+void fillPassword(size_t, char[]);
 void showResults(char);
 // should have void listed
 void showMenu(void);
 
 // Define a variable to hold a password
 // and the copy
-char password[15] = "";
-char cpassword[15] = "";
+char password[BUFFERSIZE] = "";
+char cpassword[BUFFERSIZE] = "";
 
 int main(void)
-{ 
+{
 	// Welcome the User
 	printf("Welcome to the C Array Program!\n");
 
 	// Variables
 	char cont = 'y'; // To continue with loop
 	int cVar = 0; // process variable
-        char confirm = 'y';
+	char confirm = 'y';
 
 	// Display menu and Get Selection
 	while (cont != 'E' && cont != 'e') {
 		// Display the Menu
 		showMenu();
-		
+
 		// Get the user selection
 		cont = getchar();
-                //Eliminate the "new line" char used in error by next getchar()
-                getchar();
-		
+		//Eliminate the "new line" char used in error by next getchar()
+		getchar();
+
 		// Display the menu response
 		showResults(cont);
 	}
 	// Call the Copy routine	
-	fillPassword(sizeof(password),password);
-	
+	fillPassword(sizeof(password), password);
+
 	// Display variable values
 	printf("password is %s\n", password);
 	printf("cVar is %d\n", cVar);
+	printf("Length of password is %d\n", sizeof(password) - 1);
 
 	// Copy password 	
-	memcpy(cpassword, password,sizeof(password));	
-	
+	memcpy_s(cpassword, sizeof(cpassword), password, sizeof(password));
+
 	// Pause before exiting
 	printf("Press enter to confirm your exit!");
-        confirm = getchar();
+	confirm = getchar();
 	return 0;
 }
 
 // Make a String of '1's
 void fillPassword(size_t n, char dest[]) {
 	// Should be n-1
-	 for (size_t j = 0; j < n-1; j++) {	
+	for (size_t j = 0; j < n - 1; j++) {
 		dest[j] = '1';
 	}
 	// Add null terminator for string
@@ -63,30 +66,28 @@ void fillPassword(size_t n, char dest[]) {
 
 /* Display the Results*/
 void showResults(char value) {
-	printf("cont/value is %s\n", value);
-	printf("--------------\n");
-	switch (value){
+	switch (value) {
 	case 'F':
 	case 'f':
 		printf("Welcome to the Football season!\n");
 		break;
-	case 'S':		
+	case 'S':
 	case 's':
 		printf("Welcome to the Soccer season!\n");
 		break;
-	case 'B':		
+	case 'B':
 	case 'b':
 		printf("Welcome to the Baseball season!\n");
-		break;			
-	case 'E':		
+		break;
+	case 'E':
 	case 'e':
 		printf("Exiting the Menu system!\n");
 		break;
 	default:
 		printf("Please enter a valid selection\n");
-                break;
+		break;
 	}
-	
+
 }
 
 /* Display the Menu*/
