@@ -6,7 +6,6 @@ enum { BUFFERSIZE = 15 };
 // Function prototypes
 void fillPassword(size_t, char[]);
 void showResults(char);
-// should have void listed
 void showMenu(void);
 
 // Define a variable to hold a password
@@ -17,7 +16,7 @@ char cpassword[BUFFERSIZE] = "";
 int main(void)
 {
 	// Welcome the User
-	printf("Welcome to the C Array Program!\n");
+	printf_s("Welcome to the C Array Program!\n");
 
 	// Variables
 	char cont = 'y'; // To continue with loop
@@ -41,15 +40,15 @@ int main(void)
 	fillPassword(sizeof(password), password);
 
 	// Display variable values
-	printf("password is %s\n", password);
-	printf("cVar is %d\n", cVar);
-	printf("Length of password is %d\n", sizeof(password) - 1);
+	printf_s("password is %s\n", password);
+	printf_s("cVar is %d\n", cVar);
+	printf_s("Length of password is %d\n", sizeof(password) - 1);
 
 	// Copy password 	
 	memcpy_s(cpassword, sizeof(cpassword), password, sizeof(password));
 
 	// Pause before exiting
-	printf("Press enter to confirm your exit!");
+	printf_s("Press enter to confirm your exit!");
 	confirm = getchar();
 	return 0;
 }
@@ -92,9 +91,9 @@ void showResults(char value) {
 
 /* Display the Menu*/
 void showMenu(void) {
-	printf("Enter a selection from the following menu.\n");
-	printf("B. Baseball season.\n");
-	printf("F. Football season.\n");
-	printf("S. Soccer season.\n");
-	printf("E. Exit the system.\n");
+	printf_s("Enter a selection from the following menu.\n");
+	printf_s("B. Baseball season.\n");
+	printf_s("F. Football season.\n");
+	printf_s("S. Soccer season.\n");
+	printf_s("E. Exit the system.\n");
 }
