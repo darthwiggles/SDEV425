@@ -29,9 +29,10 @@ int main(void)
 		showMenu();
 
 		// Get the user selection
-		cont = getchar();
+		//cont = getchar();
 		//Eliminate the "new line" char used in error by next getchar()
-		getchar();
+		//getchar();
+		scanf_s("%c", &cont);
 
 		// Display the menu response
 		showResults(cont);
