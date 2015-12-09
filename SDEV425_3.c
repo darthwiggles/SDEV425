@@ -21,7 +21,6 @@ int main(void)
 	// Variables
 	char cont = 'y'; // To continue with loop
 	int cVar = 0; // process variable
-	char confirm = 'y';
 
 	// Display menu and Get Selection
 	while (cont != 'E' && cont != 'e') {
@@ -29,10 +28,9 @@ int main(void)
 		showMenu();
 
 		// Get the user selection
-		//cont = getchar();
-		//Eliminate the "new line" char used in error by next getchar()
-		//getchar();
-		scanf_s("%c", &cont);
+		scanf_s("%c", &cont, 1);
+		//No user input accepted; just clears newline char
+		getchar();
 
 		// Display the menu response
 		showResults(cont);
@@ -50,7 +48,7 @@ int main(void)
 
 	// Pause before exiting
 	printf_s("Press enter to confirm your exit!");
-	confirm = getchar();
+	getchar();
 	return 0;
 }
 
